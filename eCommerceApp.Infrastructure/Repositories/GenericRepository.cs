@@ -1,6 +1,6 @@
-﻿using eCommerceApp.Domain.Interfaces;
+﻿using eCommerceApp.Application.Exceptions;
+using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Infrastructure.Data;
-using eCommerceApp.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceApp.Infrastructure.Repositories
