@@ -13,7 +13,7 @@ namespace eCommerceApp.Application.Services.Implementations
         {
             var mappedData = mapper.Map<Category>(category);
             int result = await categoryInterface.AddAsync(mappedData);
-            return result > 0 ? new ServiceRespond(true, "Category deleted!") : new ServiceRespond(false, "Category failed to be deleted!");
+            return result > 0 ? new ServiceRespond(true, "Category created!") : new ServiceRespond(false, "Category failed to be deleted!");
         }
 
         public async Task<ServiceRespond> DeleteAsync(Guid id)
