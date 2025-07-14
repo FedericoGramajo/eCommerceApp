@@ -10,7 +10,7 @@ namespace eCommerceApp.Application.Services.Interfaces.Authentication
 {
     public interface IAuthenticationService
     {
-        Task<ServiceRespond> CreateUser(CreateUser user);
+        Task<ServiceResponse> CreateUser(CreateUser user);
         Task<LoginResponse> LoginUser(LoginUser user);
         Task<LoginResponse> ReviveToken(string refreshToken);
 

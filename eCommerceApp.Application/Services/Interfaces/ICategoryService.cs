@@ -7,8 +7,8 @@ namespace eCommerceApp.Application.Services.Interfaces
     {
         Task<IEnumerable<GetCategory>> GetAllAsync();
         Task<GetCategory> GetByIdAsync(Guid id);
-        Task<ServiceRespond> AddAsync(CreateCategory category);
-        Task<ServiceRespond> UpdateAsync(UpdateCategory category);
-        Task<ServiceRespond> DeleteAsync(Guid id);
+        Task<ServiceResponse> AddAsync(CreateCategory category);
+        Task<ServiceResponse> UpdateAsync(UpdateCategory category);
+        Task<ServiceResponse> DeleteAsync(Guid id);
     }
 }

@@ -9,17 +9,17 @@ namespace eCommerceApp.Application.Services.Implementations
 {
     public class CategoryService(IGeneric<Category> categoryInterface, IMapper mapper) : ICategoryService
     {
-        public async Task<ServiceRespond> AddAsync(CreateCategory category)
+        public async Task<ServiceResponse> AddAsync(CreateCategory category)
         {
             var mappedData = mapper.Map<Category>(category);
             int result = await categoryInterface.AddAsync(mappedData);
-            return result > 0 ? new ServiceRespond(true, "Category created!") : new ServiceRespond(false, "Category failed to be deleted!");
+            return result > 0 ? new ServiceResponse(true, "Category created!") : new ServiceResponse(false, "Category failed to be deleted!");
         }
 
-        public async Task<ServiceRespond> DeleteAsync(Guid id)
+        public async Task<ServiceResponse> DeleteAsync(Guid id)
         {
             int result = await categoryInterface.DeleteAsync(id);
-            return result > 0 ? new ServiceRespond(true, "Category deleted!") : new ServiceRespond(false, "Category not found or failed to be deleted!");
+            return result > 0 ? new ServiceResponse(true, "Category deleted!") : new ServiceResponse(false, "Category not found or failed to be deleted!");
         }
 
         public async Task<IEnumerable<GetCategory>> GetAllAsync()
@@ -34,11 +34,11 @@ namespace eCommerceApp.Application.Services.Implementations
             return rawData == null ? new GetCategory() : mapper.Map<GetCategory>(rawData);
         }
 
-        public async Task<ServiceRespond> UpdateAsync(UpdateCategory category)
+        public async Task<ServiceResponse> UpdateAsync(UpdateCategory category)
         {
             var mappedData = mapper.Map<Category>(category);
             int result = await categoryInterface.UpdateAsync(mappedData);
-            return result > 0 ? new ServiceRespond(true, "Category updated!") : new ServiceRespond(false, "Category failed to be update!");
+            return result > 0 ? new ServiceResponse(true, "Category updated!") : new ServiceResponse(false, "Category failed to be update!");
         }
     }
 }
