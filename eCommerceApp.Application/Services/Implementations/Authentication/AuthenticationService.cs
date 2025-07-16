@@ -63,7 +63,13 @@ namespace eCommerceApp.Application.Services.Implementations.Authentication
             string jwtToken = tokenManagement.GenerateToken(claims);
             string refreshToken = tokenManagement.GetRefreshToken();
 
-            int saveTokenResult = await tokenManagement.AddRefreshToken(_user!.Id, refreshToken);
+            int saveTokenResult = 0;
+            bool userTokenCheck = await tokenManagement.ValidateRefreshToken(refreshToken);
+            if (userTokenCheck) 
+                saveTokenResult = await tokenManagement.UpdateRefreshToken(_user!.Id, refreshToken);
+            else
+                 saveTokenResult = await tokenManagement.AddRefreshToken(_user!.Id, refreshToken);
+
             return saveTokenResult <= 0 ? new LoginResponse(Message: "Internal error ocurred while authenticating") :
                 new LoginResponse(Success: true, Token: jwtToken, RefreshToken: refreshToken);
         }
