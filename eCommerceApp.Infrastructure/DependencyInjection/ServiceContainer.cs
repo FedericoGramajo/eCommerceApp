@@ -1,12 +1,15 @@
-﻿using eCommerceApp.Application.Services.Interfaces.Logging;
+﻿using eCommerceApp.Application.Services.Interfaces.Cart;
+using eCommerceApp.Application.Services.Interfaces.Logging;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Entities.Identity;
 using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Domain.Interfaces.Authentication;
+using eCommerceApp.Domain.Interfaces.Cart;
 using eCommerceApp.Infrastructure.Data;
 using eCommerceApp.Infrastructure.Middleware;
 using eCommerceApp.Infrastructure.Repositories;
 using eCommerceApp.Infrastructure.Repositories.Authentication;
+using eCommerceApp.Infrastructure.Repositories.Cart;
 using eCommerceApp.Infrastructure.Servicies;
 using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,9 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Runtime.CompilerServices;
 using System.Text;
-
 namespace eCommerceApp.Infrastructure.DependencyInjection
 {
     public static class ServiceContainer
@@ -75,6 +76,8 @@ namespace eCommerceApp.Infrastructure.DependencyInjection
             services.AddScoped<IUserManagement, UserManagement>();
             services.AddScoped<ITokenManagement, TokenManagement>();
             services.AddScoped<IRoleManagement, RoleManagement>();
+            services.AddScoped<IPaymentMethod, PaymentMethodRepository>();
+            services.AddScoped<IPaymentService, StipePaymentService>();
             return services;
         }
         public static IApplicationBuilder UseInfrastructureService(this IApplicationBuilder app)

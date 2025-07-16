@@ -1,4 +1,5 @@
 ﻿using eCommerceApp.Domain.Entities;
+using eCommerceApp.Domain.Entities.Cart;
 using eCommerceApp.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,11 +15,21 @@ namespace eCommerceApp.Infrastructure.Data
         public DbSet<Product> Products{ get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<RefreshToken> RefreshToken { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             
+            builder.Entity<PaymentMethod>()
+                .HasData(
+                    new PaymentMethod
+                    {
+                        Id = Guid.Parse("f5a43dbc-5c5d-4e77-bdbf-037f8f9dd10d"),
+                        Name = "Credit Card"
+                    }
+                );
             builder.Entity<IdentityRole>()
                 .HasData(
                     new IdentityRole
