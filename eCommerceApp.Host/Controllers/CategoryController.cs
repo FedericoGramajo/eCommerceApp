@@ -49,5 +49,12 @@ namespace eCommerceApp.Host.Controllers
             var result = await categoryService.DeleteAsync(id);
             return result.Success ? Ok(result) : BadRequest(result);
         }
+
+        [HttpGet("products-by-category/{categoryId}")]
+        public async Task<ActionResult> GetProductsByCategory(Guid categoryId)
+        {
+            var result = await categoryService.GetProductsByCategory(categoryId);
+            return result.Any() ? Ok(result) : NotFound(); 
+        }
     }
 }
