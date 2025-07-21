@@ -55,7 +55,7 @@ namespace eCommerceApp.Infrastructure.Repositories.Authentication
         public async Task<int> RemoveUserByEmail(string email)
         {
             var user = await context.Users.FirstOrDefaultAsync(_ => _.Email == email);
-            context.Users.Remove(user);
+            context.Users.Remove(user!);
             return await context.SaveChangesAsync();
         }
     }
