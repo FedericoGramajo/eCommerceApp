@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eCommerceApp.Application.DTOs;
 using eCommerceApp.Application.DTOs.Category;
+using eCommerceApp.Application.DTOs.Product;
 using eCommerceApp.Application.Services.Interfaces;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Interfaces;
@@ -35,13 +36,13 @@ namespace eCommerceApp.Application.Services.Implementations
             return rawData == null ? new GetCategory() : mapper.Map<GetCategory>(rawData);
         }
 
-        public async Task<IEnumerable<GetCategory>> GetProductsByCategory(Guid categoryId)
+        public async Task<IEnumerable<GetProduct>> GetProductsByCategory(Guid categoryId)
         {
             var product = await categorySpecifics.GetProductsByCategory(categoryId);
             if (!product.Any())
                 return [];
             
-            return mapper.Map<IEnumerable<GetCategory>>(product);
+            return mapper.Map<IEnumerable<GetProduct>>(product);
         }
 
         public async Task<ServiceResponse> UpdateAsync(UpdateCategory category)
