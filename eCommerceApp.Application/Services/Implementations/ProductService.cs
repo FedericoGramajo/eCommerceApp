@@ -18,7 +18,7 @@ namespace eCommerceApp.Application.Services.Implementations
         {
             var mappedData = mapper.Map<Product>(product);
             int result = await productInterface.AddAsync(mappedData);
-            return result > 0 ? new ServiceResponse(true, "Product deleted!") : new ServiceResponse(false, "Product failed to be deleted!");
+            return result > 0 ? new ServiceResponse(true, "Product created!") : new ServiceResponse(false, "Product failed to be create!");
 
         }
 
