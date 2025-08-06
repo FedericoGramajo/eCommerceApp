@@ -1,5 +1,4 @@
-﻿using eCommerceApp.Application.Services.Interfaces;
-using eCommerceApp.Application.Services.Interfaces.Cart;
+﻿using eCommerceApp.Application.Services.Interfaces.Cart;
 using eCommerceApp.Application.Services.Interfaces.Logging;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Entities.Identity;
@@ -82,6 +81,7 @@ namespace eCommerceApp.Infrastructure.DependencyInjection
             services.AddScoped<IPaymentMethod, PaymentMethodRepository>();
             services.AddScoped<IPaymentService, StipePaymentService>();
             services.AddScoped<ICategory, CategoryRepository>();
+            services.AddScoped<ICart, CartRepository>();    
 
             Stripe.StripeConfiguration.ApiKey = config["Stripe:SecretKey"];
             return services;

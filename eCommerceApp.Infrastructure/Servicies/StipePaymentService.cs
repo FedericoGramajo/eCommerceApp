@@ -33,11 +33,11 @@ namespace eCommerceApp.Infrastructure.Servicies
                 }
                 var options = new SessionCreateOptions
                 {
-                    PaymentMethodTypes = ["usd"],
+                    PaymentMethodTypes = ["card"],
                     LineItems = lineItems,
                     Mode = "payment",
-                    SuccessUrl = "https://localhost:7132/payment-success",
-                    CancelUrl = "https://localhost:7132/payment-cancel"
+                    SuccessUrl = "https://localhost:7063/payment-success",
+                    CancelUrl = "https://localhost:7063/payment-cancel"
                 };
                 var service = new SessionService();
                 Session session = await service.CreateAsync(options);
