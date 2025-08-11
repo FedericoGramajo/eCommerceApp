@@ -5,12 +5,13 @@ using eCommerceApp.Application.Services.Interfaces.Cart;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Entities.Cart;
 using eCommerceApp.Domain.Interfaces;
+using eCommerceApp.Domain.Interfaces.Authentication;
 using eCommerceApp.Domain.Interfaces.Cart;
 
 namespace eCommerceApp.Application.Services.Implementations.Cart
 {
     public class CartService(ICart cartInterface, IMapper mapper, IGeneric<Product> productInterface, 
-        IPaymentMethodService paymentMethod, IPaymentService paymentService) : ICartService
+        IPaymentMethodService paymentMethod, IPaymentService paymentService, IUserManagement userManagement) : ICartService
     {
         public async Task<ServiceResponse> Checkout(Checkout checkout)
         {
@@ -49,5 +50,31 @@ namespace eCommerceApp.Application.Services.Implementations.Cart
 
             return (cartProducts!, totalAmount);
         }
-    }
+        public async Task<IEnumerable<GetAchieve>> GetAchives()
+        {
+            var history = await cartInterface.GetAllCheckoutHistory();
+            if (history == null) return [];
+            var groupByCustomerId = history.GroupBy(x => x.UserId).ToList();
+            var products = await productInterface.GetAllAsync();
+            var achieves = new List<GetAchieve>();
+            foreach (var customerId in groupByCustomerId)
+            {
+                var customerDetails = await userManagement.GetUserById(customerId.Key!);
+                foreach (var item in customerId)
+                {
+                    var product = products.FirstOrDefault(x => x.Id == item.ProductId);
+                    achieves.Add(new GetAchieve
+                    {
+                        CustomerName = customerDetails.FullName,
+                        CustomerEmail = customerDetails.Email,
+                        ProductName = product!.Name,
+                        AmountPayed = item.Quantity * product.Price,
+                        QuantityOrdered = item.Quantity,
+                        DatePurcharsed = item.CreatedData
+                    });
+                }
+            }
+                return achieves;
+        }
+    }    
 }
