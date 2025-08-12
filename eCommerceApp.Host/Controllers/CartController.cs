@@ -1,5 +1,6 @@
 ﻿using eCommerceApp.Application.DTOs.Cart;
 using eCommerceApp.Application.Services.Interfaces.Cart;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace eCommerceApp.Host.Controllers
     public class CartController(ICartService cartService) : ControllerBase
     {
         [HttpPost("checkout")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> Checkout(Checkout checkout)
         {
             if(!ModelState.IsValid)
@@ -20,10 +22,18 @@ namespace eCommerceApp.Host.Controllers
         }
 
         [HttpPost("save-checkout")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> SaveCheckout(IEnumerable<CreateAchieve> achieves)
         {
             var result = await cartService.SaveCheckOutHistory(achieves);
             return result.Success ? Ok(result) : BadRequest(result);
+        }
+        [HttpGet("get-achieves")]
+        [Authorize(Roles ="Admin")]
+        public async  Task<IActionResult> GetAllChecoutHistory()
+        {
+            var achieves = await cartService.GetAchives();
+            return achieves.Any() ? Ok(achieves) : NotFound();
         }
     }
 }

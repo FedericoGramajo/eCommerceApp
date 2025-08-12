@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using eCommerceApp.Application.Services.Interfaces;
 using eCommerceApp.Application.DTOs.Product;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eCommerceApp.Host.Controllers
 {
@@ -23,6 +24,7 @@ namespace eCommerceApp.Host.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(CreateProduct product)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -32,6 +34,7 @@ namespace eCommerceApp.Host.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(UpdateProduct product)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -41,6 +44,7 @@ namespace eCommerceApp.Host.Controllers
         }
 
         [HttpDelete("delete/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delte(Guid id)
         {
             var result = await productService.DeleteAsync(id);
