@@ -2,6 +2,7 @@
 using eCommerceApp.Application.DTOs.Product;
 using eCommerceApp.Application.Services.Implementations;
 using eCommerceApp.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,7 @@ namespace eCommerceApp.Host.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(CreateCategory category)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -35,6 +37,7 @@ namespace eCommerceApp.Host.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(UpdateCategory category)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -44,6 +47,7 @@ namespace eCommerceApp.Host.Controllers
         }
 
         [HttpDelete("delete/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delte(Guid id)
         {
             var result = await categoryService.DeleteAsync(id);
